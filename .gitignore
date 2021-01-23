@@ -5,10 +5,17 @@
 *.dll
 *.so
 *.dylib
+/swaggerui-server
 
+### Temp artifacts generated for the build ###
+.tools_ok
 
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/tasks.json
 !.vscode/launch.json
 *.code-workspace
+
+# The (temporary) static folder
+# This is the content of swagger-ui, except buy the index file
+static

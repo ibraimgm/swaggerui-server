@@ -1,0 +1,22 @@
+7,9c7,9
+<     <link rel="stylesheet" type="text/css" href="./swagger-ui.css" >
+<     <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
+<     <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
+---
+>     <link rel="stylesheet" type="text/css" href="{{.Prefix}}/static/swagger-ui.css" >
+>     <link rel="icon" type="image/png" href="{{.Prefix}}/static/favicon-32x32.png" sizes="32x32" />
+>     <link rel="icon" type="image/png" href="{{.Prefix}}/static/favicon-16x16.png" sizes="16x16" />
+36,37c36,37
+<     <script src="./swagger-ui-bundle.js" charset="UTF-8"> </script>
+<     <script src="./swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+---
+>     <script src="{{.Prefix}}/static/swagger-ui-bundle.js" charset="UTF-8"> </script>
+>     <script src="{{.Prefix}}/static/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+42c42,46
+<         url: "https://petstore.swagger.io/v2/swagger.json",
+---
+>         urls: [
+>           {{range $item := .Items}}
+>             {url: "{{$item.URL}}", name: "{{$item.Name}}"},
+>           {{end}}
+>         ],

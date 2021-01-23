@@ -1,0 +1,96 @@
+# Updated for golanci-lint 1.34
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+  misspell:
+    locale: US
+  unused:
+    check-exported: false
+  maligned:
+    suggest-new: true
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - performance
+  goimports:
+    local-prefixes: github.com/ibraimgm/swaggerui-server
+
+linters:
+  fast: true
+  enable:
+    - asciicheck
+    - exhaustive
+    - funlen
+    - gci
+    - gochecknoinits
+    - gocognit
+    - gocritic
+    # - godot (currently, there is no way to ignore comments on private vars)
+    - goerr113
+    - goimports
+    - golint
+    - gosec
+    - gosimple
+    - govet
+    - maligned
+    - misspell
+    - nakedret
+    - nolintlint
+    - rowserrcheck
+    - scopelint
+    - scopelint
+    - sqlclosecheck
+    - staticcheck
+    - testpackage
+    - unconvert
+    - unparam
+    - unused
+    - whitespace
+
+issues:
+  exclude-rules:
+    # ignore some linters on test code
+    - path: _test\.go
+      linters:
+        - funlen
+        - gocognit
+        - maligned
+
+    # goimports: We should care only when changing files
+    - text: File is not `goimports`-ed
+      linters:
+        - goimports
+
+    # errcheck: Almost all programs ignore errors on these functions and in most cases it's ok
+    - text: Error return value of .((os\.)?std(out|err)\..*|.*Close|.*Flush|os\.Remove(All)?|.*printf?|os\.(Un)?Setenv). is not checked
+      linters:
+        - errcheck
+
+    # staticcheck: Developers tend to write in C-style with an explicit 'break' in a 'switch', so it's ok to ignore
+    - text: ineffective break statement. Did you mean to break out of the outer loop
+      linters:
+        - staticcheck
+
+    # gosec: Too many issues in popular repos
+    - text: (Expect directory permissions to be 0750 or less|Expect file permissions to be 0600 or less)
+      linters:
+        - gosec
+
+    # gosec: Duplicated errcheck checks
+    - text: G104
+      linters:
+        - gosec
+
+    # gosec: Use of weak random number generator
+    - text: G404
+      linters:
+        - gosec
+
+    # gosec: False positive is triggered by 'src, err := ioutil.ReadFile(filename)'
+    - text: Potential file inclusion via variable
+      linters:
+        - gosec
+
+  exclude-use-default: false
+  new: false
