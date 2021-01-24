@@ -1,0 +1,19 @@
+### Go ###
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/swaggerui-server
+coverage.txt
+static
+.tools_ok
+*.md
+Dockerfile
+.dockerignore
+.gitignore
+.golangci.yaml
+.git
+.github/*
+.vscode/*

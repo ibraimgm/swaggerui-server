@@ -6,6 +6,7 @@ The easiest way to run SwaggerUI in your Go application.
 [![codecov](https://codecov.io/gh/ibraimgm/swaggerui-server/branch/master/graph/badge.svg?token=jX55quRBda)](https://codecov.io/gh/ibraimgm/swaggerui-server)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ibraimgm/swaggerui-server)](https://goreportcard.com/report/github.com/ibraimgm/swaggerui-server)
 [![SwaggerUI](https://img.shields.io/badge/SwaggerUI-v3.40.0-blue)](https://github.com/swagger-api/swagger-ui/releases/tag/v3.40.0)
+[![Docker](https://img.shields.io/badge/docker-latest-blue)](https://hub.docker.com/r/ibraimgm/swaggerui-server)
 
 ## Usage
 
@@ -58,6 +59,17 @@ $ swaggerui-server -file documents.txt
 ```
 
 In all of the above example, the UI is available at `http://localhost:8080/`. You can change the address(`-addr`) or the location(`-location`) to more suitable values, if you wish. For example, `./swaggerui-server -addr :9090 -location /docs` will serve the UI at `http://localhost:9090/docs`.
+
+### Docker image
+
+If you don't want to compile the server yourself, another alternative is to use a prebuilt docker image:
+
+```shell
+# Try this and take a look at http://localhost:8080
+$ docker run --rm -it -p 8080:8080 ibraimgm/swaggerui-server
+```
+
+The prebuilt image is based on alpine and have `swaggerui-server` installed on `/usr/local/bin`. The default `CMD` of the image starts with the PetShop demo document, so you certainly want to customize it to a more sensible value.
 
 ### As a library
 
