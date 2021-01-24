@@ -6,6 +6,8 @@ import (
 	"strings"
 	"sync"
 	"text/template"
+
+	"github.com/ibraimgm/swaggerui-server/internal/assets"
 )
 
 // Doc represents a swagger document to be shown in the SwaggerUI.
@@ -46,7 +48,7 @@ func Handle(mux *http.ServeMux, pattern string, docs []Doc) error {
 	var templateError error
 
 	once.Do(func() {
-		b, err := Asset("index.template")
+		b, err := assets.Asset("index.template")
 		if err != nil {
 			templateError = fmt.Errorf("Failed to load template asset: %w", err)
 			return
@@ -77,7 +79,7 @@ func Handle(mux *http.ServeMux, pattern string, docs []Doc) error {
 
 	templateOutput := []byte(sb.String())
 
-	mux.Handle(staticURL, http.StripPrefix(staticURL, http.FileServer(AssetFile())))
+	mux.Handle(staticURL, http.StripPrefix(staticURL, http.FileServer(assets.AssetFile())))
 	mux.HandleFunc(rootURL, func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != rootURL && r.URL.Path != indexURL {
 			http.NotFound(w, r)

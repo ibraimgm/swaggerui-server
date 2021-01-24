@@ -5,15 +5,15 @@ GOTEST=$(GO) test
 FLAGS=
 LDFLAGS=-w -s
 
-PKGNAME=swaggeruiserver
 CMDNAME=swaggerui-server
 SOURCES=$(shell find . -type f -name "*.go") go.mod
 
 TOOLS_MARKER=.tools_ok
 TOOLS_SOURCE=go.mod tools.go
 
+STATIC_PKGNAME=assets
 STATIC_DIR=static
-STATIC_GO=static.go
+STATIC_GO=internal/assets/static.go
 
 
 all: build
@@ -39,11 +39,12 @@ $(TOOLS_MARKER): $(TOOLS_SOURCE)
 # to avoid adding the swagger files to VCS and making the package
 # 'go-gettable'
 static: tools $(STATIC_DIR)/index.template
-	go-bindata -fs -pkg $(PKGNAME) -prefix $(STATIC_DIR)/ -o $(STATIC_GO) $(STATIC_DIR)/
+	go-bindata -fs -pkg $(STATIC_PKGNAME) -prefix $(STATIC_DIR)/ -o $(STATIC_GO) $(STATIC_DIR)/
 
 $(STATIC_DIR)/index.template:
 	patch $(STATIC_DIR)/index.html index.patch
 	mv $(STATIC_DIR)/index.html $@
+	rm -f $(STATIC_DIR)/*.map
 
 clean:
 	rm -f $(CMDNAME)
