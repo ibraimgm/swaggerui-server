@@ -4,6 +4,7 @@ The easiest way to run SwaggerUI in your Go application.
 
 ![CI](https://github.com/ibraimgm/swaggerui-server/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/ibraimgm/swaggerui-server/branch/master/graph/badge.svg?token=jX55quRBda)](https://codecov.io/gh/ibraimgm/swaggerui-server)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ibraimgm/swaggerui-server)](https://goreportcard.com/report/github.com/ibraimgm/swaggerui-server)
 [![SwaggerUI](https://img.shields.io/badge/SwaggerUI-v3.40.0-blue)](https://github.com/swagger-api/swagger-ui/releases/tag/v3.40.0)
 
 ## Usage
