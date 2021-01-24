@@ -6,6 +6,7 @@
 *.so
 *.dylib
 /swaggerui-server
+coverage.txt
 
 ### Temp artifacts generated for the build ###
 .tools_ok

@@ -1,6 +1,7 @@
 GO=go
 GOBUILD=$(GO) build
 GOINSTALL=$(GO) install
+GOTEST=$(GO) test
 FLAGS=
 LDFLAGS=-w -s
 
@@ -21,6 +22,9 @@ build: $(CMDNAME)
 
 $(CMDNAME): $(SOURCES) $(STATIC_GO)
 	$(GOBUILD) -o $@ $(FLAGS) -ldflags '$(LDFLAGS)' ./cmd/$(CMDNAME)
+
+check:
+	$(GOTEST) -coverprofile coverage.txt -covermode=atomic ./...
 
 tools: $(TOOLS_MARKER)
 
