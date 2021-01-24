@@ -24,7 +24,7 @@ $(CMDNAME): $(SOURCES) $(STATIC_GO)
 	$(GOBUILD) -o $@ $(FLAGS) -ldflags '$(LDFLAGS)' ./cmd/$(CMDNAME)
 
 check:
-	$(GOTEST) -coverprofile coverage.txt -covermode=atomic ./...
+	$(GOTEST) -coverprofile coverage.txt -covermode=atomic `go list | grep -v 'internal'`
 
 tools: $(TOOLS_MARKER)
 
