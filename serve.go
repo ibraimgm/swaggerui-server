@@ -50,13 +50,13 @@ func Handle(mux *http.ServeMux, pattern string, docs []Doc) error {
 	once.Do(func() {
 		b, err := assets.Asset("index.template")
 		if err != nil {
-			templateError = fmt.Errorf("Failed to load template asset: %w", err)
+			templateError = fmt.Errorf("failed to load template asset: %w", err)
 			return
 		}
 
 		tpl, err := template.New("index").Parse(string(b))
 		if err != nil {
-			templateError = fmt.Errorf("Failed to parse template: %w", err)
+			templateError = fmt.Errorf("failed to parse template: %w", err)
 			return
 		}
 
