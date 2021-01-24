@@ -5,8 +5,24 @@ The easiest way to run SwaggerUI in your Go application.
 ![CI](https://github.com/ibraimgm/swaggerui-server/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/ibraimgm/swaggerui-server/branch/master/graph/badge.svg?token=jX55quRBda)](https://codecov.io/gh/ibraimgm/swaggerui-server)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ibraimgm/swaggerui-server)](https://goreportcard.com/report/github.com/ibraimgm/swaggerui-server)
+[![Docs](https://img.shields.io/badge/godoc-reference-blue.svg)](https://pkg.go.dev/github.com/ibraimgm/swaggerui-server)
+
+[![License](https://img.shields.io/badge/license-BSD3-blue)](https://raw.githubusercontent.com/ibraimgm/swaggerui-server/master/LICENSE)
 [![SwaggerUI](https://img.shields.io/badge/SwaggerUI-v3.40.0-blue)](https://github.com/swagger-api/swagger-ui/releases/tag/v3.40.0)
-[![Docker](https://img.shields.io/badge/docker-latest-blue)](https://hub.docker.com/r/ibraimgm/swaggerui-server)
+[![Docker](https://img.shields.io/badge/docker-0.1.0-blue)](https://hub.docker.com/r/ibraimgm/swaggerui-server)
+
+This is a simple Golang library that embeds the distribution files of [Swagger UI](https://github.com/swagger-api/swagger-ui) and lets you serve them easily from whithin your web application, with zero hassle. You just need to tell what swagger files you want to show and not worry bout the details.
+
+This package also contains a command-line utility, `swaggerui-server`, that just starts a web server with the provided documentation. This is useful if, for example, each of your services provide the documentation on different locations but you want to centralize everything into a single SwaggerUI instance.
+
+Keep in mind that the aim of this library/tool is to *serve* SwaggerUI as easy as possible, and **not** to generate swagger documentation. If you're looking on how to generate Swagger documentation for your Golang projects, take a look at [swag](https://github.com/swaggo/swag) or [go-swagger](https://github.com/go-swagger/go-swagger).
+
+- [SwaggerUI Server](#swaggerui-server)
+  - [Usage](#usage)
+    - [Command-line application](#command-line-application)
+    - [Docker image](#docker-image)
+    - [As a library](#as-a-library)
+  - [Re-generating static resources](#re-generating-static-resources)
 
 ## Usage
 
