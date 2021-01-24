@@ -9,6 +9,56 @@ The easiest way to run SwaggerUI in your Go application.
 
 ## Usage
 
+### Command-line application
+
+Use the `swaggerui-server`  command-line application to easily display one or more Swagger definitions. First, install the tool with:
+
+```shell
+# install
+$ go install github.com/ibraimgm/swaggerui-server/cmd/...
+
+# check the available options
+$ swaggerui-server -h
+Usage of ./swaggerui-server:
+  -addr string
+        the address and port to listen (default ":8080")
+  -docs string
+        a comma-separated list of documents in the format NAME=URL
+  -file string
+        a file with the list of documents in the format NAME=URL, separated by newline
+  -location string
+        the url location to use for the documentation (default "/")
+```
+
+To provide one or more documents to display, use the `-docs` command-line argument:
+
+```shell
+# Serves only the 'PetStore' demo
+$ swaggerui-server -docs https://petstore.swagger.io/v2/swagger.json
+
+# Same as above, but show a nice name instead of the URL in the UI
+$ swaggerui-server -docs PetStore=https://petstore.swagger.io/v2/swagger.json
+
+# You can specify more than one definition as a comma-separated list
+$ swaggerui-server -docs PetStore=https://petstore.swagger.io/v2/swagger.json,Logz=https://raw.githubusercontent.com/logzio/public-api/master/alerts/swagger.json
+```
+
+If you need to show multiple documents, passing all of them via a command-line parameter is a bit cumbersome. A better option is to define the list of documents into a file and use the `-file` option:
+
+```shell
+# The file below has a list of documents, in the same format
+# accepted by the `-docs` parameter
+$ cat documents.txt
+PetStore=https://petstore.swagger.io/v2/swagger.json
+Logz.io=https://raw.githubusercontent.com/logzio/public-api/master/alerts/swagger.json
+SwaggerTools=https://raw.githubusercontent.com/apigee-127/swagger-tools/master/examples/2.0/api/swagger.json
+
+# Just provide the file and you're good to go
+$ swaggerui-server -file documents.txt
+```
+
+In all of the above example, the UI is available at `http://localhost:8080/`. You can change the address(`-addr`) or the location(`-location`) to more suitable values, if you wish. For example, `./swaggerui-server -addr :9090 -location /docs` will serve the UI at `http://localhost:9090/docs`.
+
 ### As a library
 
 You can use `swaggerui-server` as a library to server the UI directly inside your application. For example, if you with to serve the UI on the `/docs` URL, you can do:
