@@ -38,7 +38,9 @@ func main() {
   }
 
   // register the handler in the correct path
-  mux.Handle("/docs/", swaggeruiserver.MustAt("/docs/", docs))
+  if err := swaggeruiserver.Handle(mux, "/docs", docs); err != nil {
+    log.Fatal(err)
+  }
 
   // run you application
   log.Println(http.ListenAndServe(":8080", mux))

@@ -31,15 +31,18 @@ type templateData struct {
 var once sync.Once
 var indexTpl *template.Template
 
-// At returns a ServerMux that serves a SwaggerUI configured
-// to with the provided docs.
+// Handle adds the required SwaggerUI handlers to mux.
 //
-// The main file is served with "pattern/index.html", while the
-// needed static content is acessible with "pattern/static".
+// This function adds two handlers to an existing mux: one on
+// "{pattern}/" to serve the SwaggerUI index file, and one on
+// "{pattern}/static"to serve the required static files, like
+// CSS, images, etc.
+//
+// If no pattern is provided, "/" is assumed.
 //
 // This function is most useful when you need to bundle the SwaggerUI
 // into an existing application.
-func At(pattern string, docs []Doc) (*http.ServeMux, error) {
+func Handle(mux *http.ServeMux, pattern string, docs []Doc) error {
 	var templateError error
 
 	once.Do(func() {
@@ -59,7 +62,7 @@ func At(pattern string, docs []Doc) (*http.ServeMux, error) {
 	})
 
 	if templateError != nil {
-		return nil, templateError
+		return templateError
 	}
 
 	pattern = strings.TrimSuffix(pattern, "/")
@@ -69,12 +72,11 @@ func At(pattern string, docs []Doc) (*http.ServeMux, error) {
 
 	var sb strings.Builder
 	if err := indexTpl.Execute(&sb, templateData{Prefix: pattern, Items: docs}); err != nil {
-		return nil, fmt.Errorf("Failed to execute template content: %w", err)
+		return fmt.Errorf("Failed to execute template content: %w", err)
 	}
 
 	templateOutput := []byte(sb.String())
 
-	mux := http.NewServeMux()
 	mux.Handle(staticURL, http.StripPrefix(staticURL, http.FileServer(AssetFile())))
 	mux.HandleFunc(rootURL, func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != rootURL && r.URL.Path != indexURL {
@@ -85,7 +87,17 @@ func At(pattern string, docs []Doc) (*http.ServeMux, error) {
 		w.Write(templateOutput) //nolint:errcheck
 	})
 
-	return mux, nil
+	return nil
+}
+
+// At returns a ServerMux that serves a SwaggerUI configured
+// to with the provided docs.
+//
+// The main file is served with "{pattern}/index.html", while the
+// needed static content is acessible with "{pattern}/static".
+func At(pattern string, docs []Doc) (*http.ServeMux, error) {
+	mux := http.NewServeMux()
+	return mux, Handle(mux, pattern, docs)
 }
 
 // MustAt works the same as At, but panics on error.
